@@ -1,3 +1,9 @@
+<?php
+require_once("GetMoney.php");
+$getMmoney = new GetMoney;
+$row = $getMmoney->selectMoney($_POST['user_name']);
+?>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -6,11 +12,15 @@
     <title>簡易銀行系統-存款</title>
 </head>
 <body>
-    帳戶餘額 : 123456
-    <br>
-    存款金額 : <input type = "number" name = "deposit" id = "deposit">
-    <br>
-    <button>存款</button>
-    <button>回首頁</button>
+    <form action="into_db.php" method="post">
+        帳戶餘額 : <?php echo $row['bank_user_money']?>
+        <br>
+        存款金額 : <input type = "number" name = "money" id = "money">
+        <br>
+        <input type = "hidden" value = '1' name ="type">
+        <input type = "hidden" value = '<?php echo $row['bank_user_id']?>' name ="id">
+        <button>存款</button>
+        <button><a href = 'index.php'>回首頁</a></button>
+    </form>
 </body>
 </html>

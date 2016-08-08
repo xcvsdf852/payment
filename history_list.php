@@ -20,6 +20,6 @@
             <td>789</td>
 　      </tr>
     </table>
-    <button>回首頁</button>
+    <button><a href = 'index.php'>回首頁</a></button>
 </body>
 </html>

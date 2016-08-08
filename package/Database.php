@@ -2,7 +2,7 @@
 class Database
 {
     const DATABASE_HOST = 'localhost';
-    const DATABASE_NAME = 'sign';
+    const DATABASE_NAME = 'bank';
     const DATABASE_USERNAME = 'root';
     const DATABASE_PASSWORD = '';
     private $connection = null;
