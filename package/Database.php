@@ -14,7 +14,7 @@ class Database
         $dsn = sprintf('mysql:dbname=%s;host=%s', static::DATABASE_NAME, static::DATABASE_HOST);
         try {
             $this->connection = new PDO($dsn, static::DATABASE_USERNAME, static::DATABASE_PASSWORD);
-            $this->connection -> exec("SET CHARACTER SET utf8");
+            $this->connection->exec("SET CHARACTER SET utf8");
         } catch (PDOException $e) {
             echo 'Connection failed: '.$e->getMessage();
         }
@@ -118,7 +118,7 @@ class Database
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $myip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } else {
-            $myip= $_SERVER['REMOTE_ADDR'];
+            $myip = $_SERVER['REMOTE_ADDR'];
         }
 
         return $myip;

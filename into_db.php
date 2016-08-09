@@ -4,7 +4,7 @@ require_once("BankSystem.php");
 # 2 是取款
 $bankSystem = new BankSystem;
 
-if ($_POST['type']==1) {
+if ($_POST['type'] == 1) {
     $arrayReturn = $bankSystem->deposit($_POST['money'], $_POST['type'], $_POST['id']); #存款
 } else {
     $arrayReturn = $bankSystem->withdrawals($_POST['money'], $_POST['type'], $_POST['id']); #取款
@@ -13,13 +13,13 @@ if ($_POST['type']==1) {
 ?>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset = "utf-8">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <title>簡易銀行系統-執行結果</title>
 </head>
 <body>
     <form action="into_db.php" method="post">
-        操作結果 : <?php echo $arrayReturn['mesg']?>
+        操作結果 : <?php echo $arrayReturn['mesg']; ?>
         <br>
         <button><a href = 'index.php'>回首頁</a></button>
     </form>

@@ -2,11 +2,11 @@
 require_once("BankSystem.php");
 
 $bankSystem = new BankSystem;
-$arrayReturn =  $bankSystem->getHistoryList($_POST['user_name']);
+$arrayReturn = $bankSystem->getHistoryList($_POST['user_name']);
 
-$length = count($arrayReturn) -1 ;
+$length = count($arrayReturn) - 1;
 
-for ($i = 0; $i <= $length; $i++ ) {
+for ($i = 0; $i <= $length; $i++) {
     if ($arrayReturn[$i]['bank_log_do'] == 1) {
         $arrayReturn[$i]['bank_log_do'] = '存款';
     } else {
@@ -16,7 +16,7 @@ for ($i = 0; $i <= $length; $i++ ) {
 }
 
 $html = "";
-for ($i = 0; $i <= $length; $i++ ) {
+for ($i = 0; $i <= $length; $i++) {
     $html .= "<tr>
                 <td id ='pa_id_".$arrayReturn[$i]['bank_log_id']."'>".$arrayReturn[$i]['bank_log_time']."</td>
                 <td>".$arrayReturn[$i]['bank_log_do']."</td>
@@ -30,8 +30,8 @@ for ($i = 0; $i <= $length; $i++ ) {
 <!DOCTYPE HTML>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset = "utf-8">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <title>簡易銀行系統-明細</title>
 </head>
 <body>
@@ -45,7 +45,7 @@ for ($i = 0; $i <= $length; $i++ ) {
             </tr>
         </thead>
         <tbody>
-        <?php echo  $html;?>
+        <?php echo $html; ?>
         </tbody>
     </table>
     <button><a href = 'index.php'>回首頁</a></button>

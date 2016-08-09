@@ -3,7 +3,6 @@ require_once("package/Database.php");
 
 class BankSystem
 {
-
     function deposit($money, $type, $id)
     {
         $db = new Database();
@@ -12,8 +11,7 @@ class BankSystem
         $type = $db->strSqlReplace($type);
         $id = $db->strSqlReplace($id);
 
-        try
-        {
+        try {
             $db->getConnection()->beginTransaction();
             $sql = "SELECT `bank_user_money` ";
             $sql .= "FROM `bank_user` ";
@@ -70,8 +68,7 @@ class BankSystem
         $type = $db->strSqlReplace($type);
         $id = $db->strSqlReplace($id);
 
-        try
-        {
+        try {
             $db->getConnection()->beginTransaction();
             $sql = "SELECT `bank_user_money` ";
             $sql .= "FROM `bank_user` ";
@@ -129,7 +126,6 @@ class BankSystem
 
             return $arryResult;
         }
-
     }
 
     function getHistoryList($userName){
@@ -147,7 +143,6 @@ class BankSystem
         $sqlList .= "WHERE `bank_log_suer` = '".$row[0]['bank_user_id']."'";
 
         $rowList = $db->select($sqlList);
-
 
         return $rowList;
     }
