@@ -12,44 +12,49 @@ class BankSystem
         $type = $db->strSqlReplace($type);
         $id = $db->strSqlReplace($id);
 
-        $sql = "SELECT `bank_user_money` ";
-        $sql .= "FROM `bank_user` ";
-        $sql .= "WHERE `bank_user_id` = '".$id."' FOR UPDATE";
+        try
+        {
+            $db->getConnection()->beginTransaction();
+            $sql = "SELECT `bank_user_money` ";
+            $sql .= "FROM `bank_user` ";
+            $sql .= "WHERE `bank_user_id` = '".$id."' LOCK IN SHARE MODE";
 
-        $row = $db->select($sql);
+            $row = $db->select($sql);
 
-        $balance = $row[0]['bank_user_money'];
+            $balance = $row[0]['bank_user_money'];
 
-        $sql = "UPDATE `bank_user` ";
-        $sql .= "SET `bank_user_money` = `bank_user_money` + $money ";
-        $sql .= "WHERE `bank_user_id` = '$id' ";
+            $sql = "UPDATE `bank_user` ";
+            $sql .= "SET `bank_user_money` = `bank_user_money` + $money ";
+            $sql .= "WHERE `bank_user_id` = '$id' ";
 
-        $row = $db->update($sql);
+            $row = $db->update($sql);
 
-        if (!$row) {
-            $arryResult["mesg"] = "存款失敗，系統錯誤!";
+            if (!$row) {
+                throw new Exception($error);
+            }
+
+            $balance = $balance + $money;
+            $sqlRegist .= "INSERT INTO `bank_log`";
+            $sqlRegist .= "(`bank_log_do`, `bank_log_money`, `bank_log_balance`, ";
+            $sqlRegist .= "`bank_log_suer`, `bank_log_time`, `bank_log_ip`) ";
+            $sqlRegist .= "VALUES ('$type','$money','$balance','$id',NOW(),'$ip')";
+
+            $rowRegist = $db->insert($sqlRegist);
+
+            if (!$rowRegist) {
+                throw new Exception($error);
+            }
+
+            $db->getConnection()->commit();
+
+        } catch (Exception $err) {
+            $db->getConnection()->rollback();
+            $arryResult["mesg"] = "取款失敗，系統錯誤!";
             $arryResult["isTrue"] = false;
-            $arryResult["errorCod"] = 2;
+            $arryResult["errorCod"] = 6;
 
             return $arryResult;
         }
-
-        $balance = $balance + $money;
-        $sqlRegist .= "INSERT INTO `bank_log`";
-        $sqlRegist .= "(`bank_log_do`, `bank_log_money`, `bank_log_balance`, ";
-        $sqlRegist .= "`bank_log_suer`, `bank_log_time`, `bank_log_ip`) ";
-        $sqlRegist .= "VALUES ('$type','$money','$balance','$id',NOW(),'$ip')";
-
-        $rowRegist = $db->insert($sqlRegist);
-
-        if (!$rowRegist) {
-            $arryResult["mesg"] = "存款失敗，系統錯誤!";
-            $arryResult["isTrue"] = false;
-            $arryResult["errorCod"] = 3;
-
-            return $arryResult;
-        }
-
         $arryResult["mesg"] = "存款成功!";
         $arryResult["isTrue"] = true;
         $arryResult["errorCod"] = 1;
@@ -70,7 +75,7 @@ class BankSystem
             $db->getConnection()->beginTransaction();
             $sql = "SELECT `bank_user_money` ";
             $sql .= "FROM `bank_user` ";
-            $sql .= "WHERE `bank_user_id` = '".$id."' FOR UPDATE";
+            $sql .= "WHERE `bank_user_id` = '".$id."'  LOCK IN SHARE MODE ";
 
             $row = $db->select($sql);
 
@@ -84,7 +89,7 @@ class BankSystem
 
                 $balance = $balance - $money;
                 $sqlRegist = "INSERT INTO `bank_log` ";
-                $sqlRegist .= "(`bank_log_do`, `bank_log_money`, "; 
+                $sqlRegist .= "(`bank_log_do`, `bank_log_money`, ";
                 $sqlRegist .= "`bank_log_balance`, `bank_log_suer`, `bank_log_time`, `bank_log_ip`)";
                 $sqlRegist .= "VALUES ('$type','$money','$balance','$id',NOW(),'$ip')";
 

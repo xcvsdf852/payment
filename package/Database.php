@@ -97,7 +97,7 @@ class Database
     /**
     * Get PDO Connection
     *
-    * @param   
+    * @param
     * @return  PDO Connection
     */
     public function getConnection()
@@ -108,7 +108,7 @@ class Database
     /**
     * Get ip
     *
-    * @param   
+    * @param
     * @return  ip
     */
     public function getIp()
@@ -137,7 +137,7 @@ class Database
             $str = addslashes($str);
         }
 
-        return $str; 
+        return $str;
     }
 
 }
