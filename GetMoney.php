@@ -7,9 +7,9 @@ class GetMoney
     {
         $db = new Database();
         $user_name = $db->strSqlReplace($user_name);
-        $sql = "SELECT `bank_user_id`,`bank_user_money` 
-                FROM `bank_user` 
-                WHERE `bank_user_name` = '".$user_name."'";
+        $sql = "SELECT `bank_user_id`,`bank_user_money` ";
+        $sql .= "FROM `bank_user` ";
+        $sql .= "WHERE `bank_user_name` = '".$user_name."'";
         // echo $sql;
         // exit;
         $row = $db->select($sql);

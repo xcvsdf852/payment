@@ -11,9 +11,9 @@ class BankSystem
         $type = $db->strSqlReplace($type);
         $id = $db->strSqlReplace($id);
         
-        $sql = "SELECT `bank_user_money` 
-                FROM `bank_user` 
-                WHERE `bank_user_id` = '".$id."' FOR UPDATE";
+        $sql = "SELECT `bank_user_money` "; 
+        $sql .= "FROM `bank_user` ";
+        $sql .= "WHERE `bank_user_id` = '".$id."' FOR UPDATE";
         // echo $sql;
         // exit;
         $row = $db->select($sql);
@@ -22,9 +22,9 @@ class BankSystem
         // exit;
         $balance = $row[0]['bank_user_money'];
         
-        $sql ="UPDATE `bank_user` 
-               SET `bank_user_money` = `bank_user_money` + $money
-               WHERE `bank_user_id` = '$id'";
+        $sql = "UPDATE `bank_user` ";
+        $sql .= "SET `bank_user_money` = `bank_user_money` + $money ";
+        $sql .= "WHERE `bank_user_id` = '$id' ";
         // echo $sql;
         // exit;
         $row = $db->update($sql);
@@ -43,8 +43,10 @@ class BankSystem
         }
 
         $balance = $balance + $money;
-        $sql_Regist = "INSERT INTO `bank_log`(`bank_log_do`, `bank_log_money`, `bank_log_balance`, `bank_log_suer`, `bank_log_time`, `bank_log_ip`)
-                       VALUES ('$type','$money','$balance','$id',NOW(),'$IP')";
+        $sql_Regist .= "INSERT INTO `bank_log`";
+        $sql_Regist .= "(`bank_log_do`, `bank_log_money`, `bank_log_balance`, ";
+        $sql_Regist .= "`bank_log_suer`, `bank_log_time`, `bank_log_ip`) ";
+        $sql_Regist .= "VALUES ('$type','$money','$balance','$id',NOW(),'$IP')";
         //echo $sql_Regist;
         //exit;
         $row__Regist = $db->update($sql_Regist);
@@ -83,9 +85,9 @@ class BankSystem
         try
         {
             $db->get_connection()->beginTransaction();
-            $sql = "SELECT `bank_user_money` 
-                    FROM `bank_user` 
-                    WHERE `bank_user_id` = '".$id."' FOR UPDATE";
+            $sql = "SELECT `bank_user_money` ";
+            $sql .= "FROM `bank_user` ";
+            $sql .= "WHERE `bank_user_id` = '".$id."' FOR UPDATE";
             // echo $sql;
             // exit;
             $row = $db->select($sql);
@@ -95,17 +97,19 @@ class BankSystem
             // exit;
             $balance = $row[0]['bank_user_money'];
             if ($balance >= $money) {
-                $sql ="UPDATE `bank_user` 
-                       SET `bank_user_money` = `bank_user_money` - $money
-                       WHERE `bank_user_id` = '$id'";
+                $sql = "UPDATE `bank_user` ";
+                $sql .= "SET `bank_user_money` = `bank_user_money` - $money ";
+                $sql .= "WHERE `bank_user_id` = '$id'";
                 // echo $sql;
                 // exit;
                 $row = $db->update($sql);
                 // var_dump($row);
                 // exit;
                 $balance = $balance - $money;
-                $sql_Regist = "INSERT INTO `bank_log`(`bank_log_do`, `bank_log_money`, `bank_log_balance`, `bank_log_suer`, `bank_log_time`, `bank_log_ip`)
-                               VALUES ('$type','$money','$balance','$id',NOW(),'$IP')";
+                $sql_Regist = "INSERT INTO `bank_log` ";
+                $sql_Regist .= "(`bank_log_do`, `bank_log_money`, "; 
+                $sql_Regist .= "`bank_log_balance`, `bank_log_suer`, `bank_log_time`, `bank_log_ip`)";
+                $sql_Regist .= "VALUES ('$type','$money','$balance','$id',NOW(),'$IP')";
             //   echo $sql_Regist;
             //   exit;
                 $row__Regist = $db->update($sql_Regist);
@@ -168,17 +172,18 @@ class BankSystem
     function get_history_list($user_name){
         $db = new Database();
         $user_name = $db->strSqlReplace($user_name);
-        $sql = "SELECT `bank_user_id`
-                FROM `bank_user` 
-                WHERE `bank_user_name` = '".$user_name."'";
+        $sql = "SELECT `bank_user_id` ";
+        $sql .= "FROM `bank_user` ";
+        $sql .= "WHERE `bank_user_name` = '".$user_name."'";
         // echo $sql;
         // exit;
         $row = $db->select($sql);
         // var_dump($row);
         // exit;
-        $sql_list ="SELECT `bank_log_id`, `bank_log_do`, `bank_log_money`, `bank_log_balance`, `bank_log_time`
-               FROM `bank_log`
-               WHERE `bank_log_suer` = '".$row[0]['bank_user_id']."'";
+        $sql_list ="SELECT `bank_log_id`, `bank_log_do`, `bank_log_money`, ";
+        $sql_list .= "`bank_log_balance`, `bank_log_time` ";
+        $sql_list .= "FROM `bank_log` ";
+        $sql_list .= "WHERE `bank_log_suer` = '".$row[0]['bank_user_id']."'";
         // echo $sql_list;
         $row_list = $db->select($sql_list);
         // var_dump($row_list);
