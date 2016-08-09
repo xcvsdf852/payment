@@ -3,10 +3,9 @@ require_once("BankSystem.php");
 
 $bankSystem = new BankSystem;
 $arrayReturn =  $bankSystem->getHistoryList($_POST['user_name']);
-// var_dump($arrayReturn);
+
 $length = count($arrayReturn) -1 ;
 
-// echo $length ;
 for ($i = 0; $i <= $length; $i++ ) {
     if ($arrayReturn[$i]['bank_log_do'] == 1) {
         $arrayReturn[$i]['bank_log_do'] = '存款';
@@ -16,8 +15,6 @@ for ($i = 0; $i <= $length; $i++ ) {
 
 }
 
-// var_dump($arrayReturn);
-// exit;
 $html = "";
 for ($i = 0; $i <= $length; $i++ ) {
     $html .= "<tr>

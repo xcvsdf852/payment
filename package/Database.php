@@ -94,11 +94,23 @@ class Database
         return $this->connection->exec($sql);
     }
 
+    /**
+    * Get PDO Connection
+    *
+    * @param   
+    * @return  PDO Connection
+    */
     public function getConnection()
     {
         return $this->connection;
     }
 
+    /**
+    * Get ip
+    *
+    * @param   
+    * @return  ip
+    */
     public function getIp()
     {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
@@ -112,6 +124,12 @@ class Database
         return $myip;
     }
 
+    /**
+    * addslashes string
+    *
+    * @param   string  SQL query
+    * @return  string
+    */
     function strSqlReplace($str)
     {
         $str = trim($str);

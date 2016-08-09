@@ -10,7 +10,6 @@ if ($_POST['type']==1) {
     $arrayReturn = $bankSystem->withdrawals($_POST['money'], $_POST['type'], $_POST['id']); #取款
 }
 
-// var_dump($arrayReturn);
 ?>
 <html>
 <head>
