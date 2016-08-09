@@ -18,4 +18,3 @@ class GetMoney
         return $row[0];
     }
 }
-?>
