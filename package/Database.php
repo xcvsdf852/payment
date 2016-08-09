@@ -16,7 +16,7 @@ class Database
             echo 'Connection failed: '.$e->getMessage();
         }
     }
-    /**
+     /**
      * Execute select query
      *
      * @param   string  SQL select query
@@ -28,21 +28,21 @@ class Database
         return $statement->fetchAll();
     }
     /**
-     * Execute update query
-     *
-     * @param   string  SQL update query
-     * @return  int     number of affected rows
-     */
+    * Execute update query
+    *
+    * @param   string  SQL update query
+    * @return  int     number of affected rows
+    */
     public function update($sql)
     {
         return $this->exec($sql);
     }
     /**
-     * Execute insert query
-     *
-     * @param   string  SQL insert query
-     * @return  bool
-     */
+    * Execute insert query
+    *
+    * @param   string  SQL insert query
+    * @return  bool
+    */
     public function insert($sql)
     {
         $rowEffect = $this->exec($sql);
@@ -53,60 +53,59 @@ class Database
         }
     }
     /**
-     * Execute delete query
-     *
-     * @param   string  SQL delete query
-     * @return  int     number of affected rows
-     */
+    * Execute delete query
+    *
+    * @param   string  SQL delete query
+    * @return  int     number of affected rows
+    */
     public function delete($sql)
     {
         return $this->exec($sql);
     }
     /**
-     * Last insert id
-     *
-     * @return  int
-     */
+    * Last insert id
+    *
+    * @return  int
+    */
     public function lastInsertId()
     {
         return (int)$this->connection->lastInsertId();
     }
     /**
-     * Execute any SQL query
-     *
-     * @param   string  SQL query
-     * @return  int     number of affected rows
-     */
+    * Execute any SQL query
+    *
+    * @param   string  SQL query
+    * @return  int     number of affected rows
+    */
     public function exec($sql)
     {
         return $this->connection->exec($sql);
     }
-    
+
     public function get_connection()
     {
         return $this->connection;
     }
-    
+
     public function getIp()
     {
         if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-           $myip = $_SERVER['HTTP_CLIENT_IP'];
+            $myip = $_SERVER['HTTP_CLIENT_IP'];
         } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-           $myip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            $myip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } else {
-           $myip= $_SERVER['REMOTE_ADDR'];
+            $myip= $_SERVER['REMOTE_ADDR'];
         }
         return $myip;
     }
-    
+
     function strSqlReplace($str)
     {
-    	$str = trim($str);	
-    	if (!empty($str))
-    	{
-    		$str = AddSlashes($str);	
-    	}
-    	return $str; 
+        $str = trim($str);	
+        if (!empty($str)) {
+            $str = AddSlashes($str);	
+        }
+        return $str; 
     }
 
 }
