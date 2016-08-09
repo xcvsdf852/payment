@@ -109,5 +109,4 @@ class Database
     	return $str; 
     }
 
-
 }

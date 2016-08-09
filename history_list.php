@@ -13,6 +13,7 @@ for ($i = 0; $i <= $length; $i++ ) {
     } else {
         $arrayReturn[$i]['bank_log_do'] = '取款';
     }
+
 }
 
 // var_dump($arrayReturn);

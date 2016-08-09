@@ -13,12 +13,12 @@ $row = $getMmoney->selectMoney($_POST['user_name']);
 </head>
 <body>
     <form action="into_db.php" method="post">
-        帳戶餘額 : <?php echo $row['bank_user_money']?>
+        帳戶餘額 : <?php echo $row['bank_user_money'];?>
         <br>
         存款金額 : <input type = "number" name = "money" id = "money">
         <br>
         <input type = "hidden" value = '1' name ="type">
-        <input type = "hidden" value = '<?php echo $row['bank_user_id']?>' name ="id">
+        <input type = "hidden" value = '<?php echo $row['bank_user_id'];?>' name ="id">
         <button>存款</button>
         <button><a href = 'index.php'>回首頁</a></button>
     </form>

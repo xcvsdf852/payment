@@ -36,11 +36,12 @@ class BankSystem
             } else {
                 $arry_result["mesg"] ="取款失敗，系統錯誤!";
             }
+
             $arry_result["isTrue"] = false;
             $arry_result["errorCod"] = 2;
             return $arry_result;
         }
-        
+
         $balance = $balance + $money;
         $sql_Regist = "INSERT INTO `bank_log`(`bank_log_do`, `bank_log_money`, `bank_log_balance`, `bank_log_suer`, `bank_log_time`, `bank_log_ip`)
                        VALUES ('$type','$money','$balance','$id',NOW(),'$IP')";
@@ -54,15 +55,18 @@ class BankSystem
             } else {
                 $arry_result["mesg"] = "取款失敗，系統錯誤!";
             }
+
             $arry_result["isTrue"] = false;
             $arry_result["errorCod"] = 3;
             return $arry_result;
         }
+
         if ($type==1) {
             $arry_result["mesg"] = "存款成功!";
         } else {
             $arry_result["mesg"] = "取款成功!";
         }
+
         $arry_result["isTrue"] = true;
         $arry_result["errorCod"] = 1;
         return $arry_result;
@@ -78,7 +82,6 @@ class BankSystem
         
         try
         {
-        
             $db->get_connection()->beginTransaction();
             $sql = "SELECT `bank_user_money` 
                     FROM `bank_user` 
@@ -115,10 +118,12 @@ class BankSystem
                     } else {
                         $arry_result["mesg"] ="取款失敗，系統錯誤!";
                     }
+
                     $arry_result["isTrue"] = false;
                     $arry_result["errorCod"] = 4;
                     return $arry_result;
                 }
+
                 // var_dump($row__Regist);
                 if (!$row__Regist) {
                     if ($type==1) {
@@ -126,23 +131,26 @@ class BankSystem
                     } else {
                         $arry_result["mesg"] = "取款失敗，系統錯誤!";
                     }
+
                     $arry_result["isTrue"] = false;
                     $arry_result["errorCod"] = 5;
                     return $arry_result;
                 }
+
                 if ($type==1) {
                     $arry_result["mesg"] = "存款成功!";
                 } else {
                     $arry_result["mesg"] = "取款成功!";
                 }
+
                 $arry_result["isTrue"] = true;
                 $arry_result["errorCod"] = 1;
                 return $arry_result;
-              
+
             } else {
                 throw new Exception($error);
             }
-        
+
         } catch (Exception $err) {
             $db->get_connection()->rollback();
             if ($type==1) {
@@ -154,6 +162,7 @@ class BankSystem
             $arry_result["errorCod"] = 6;
             return $arry_result;
         }
+
     }
     
     function get_history_list($user_name){
