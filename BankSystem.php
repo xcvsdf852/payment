@@ -31,12 +31,7 @@ class BankSystem
         // var_dump($row);
         // exit;
         if (!$row) {
-            if ($type==1) {
-                $arry_result["mesg"] = "存款失敗，系統錯誤!";
-            } else {
-                $arry_result["mesg"] ="取款失敗，系統錯誤!";
-            }
-
+            $arry_result["mesg"] = "存款失敗，系統錯誤!";
             $arry_result["isTrue"] = false;
             $arry_result["errorCod"] = 2;
             return $arry_result;
@@ -52,28 +47,18 @@ class BankSystem
         $row__Regist = $db->update($sql_Regist);
         // var_dump($row__Regist);
         if (!$row__Regist) {
-            if ($type==1) {
-                $arry_result["mesg"] = "存款失敗，系統錯誤!";
-            } else {
-                $arry_result["mesg"] = "取款失敗，系統錯誤!";
-            }
-
+            $arry_result["mesg"] = "存款失敗，系統錯誤!";
             $arry_result["isTrue"] = false;
             $arry_result["errorCod"] = 3;
             return $arry_result;
         }
 
-        if ($type==1) {
-            $arry_result["mesg"] = "存款成功!";
-        } else {
-            $arry_result["mesg"] = "取款成功!";
-        }
-
+        $arry_result["mesg"] = "存款成功!";
         $arry_result["isTrue"] = true;
         $arry_result["errorCod"] = 1;
         return $arry_result;
     }
-    
+
     function withdrawals($money, $type, $id)
     {
         $db = new Database();
@@ -117,12 +102,7 @@ class BankSystem
               
                 $db->get_connection()->commit();
                 if (!$row) {
-                    if ($type==1) {
-                        $arry_result["mesg"] = "存款失敗，系統錯誤!";
-                    } else {
-                        $arry_result["mesg"] ="取款失敗，系統錯誤!";
-                    }
-
+                    $arry_result["mesg"] ="取款失敗，系統錯誤!";
                     $arry_result["isTrue"] = false;
                     $arry_result["errorCod"] = 4;
                     return $arry_result;
@@ -130,38 +110,23 @@ class BankSystem
 
                 // var_dump($row__Regist);
                 if (!$row__Regist) {
-                    if ($type==1) {
-                        $arry_result["mesg"] = "存款失敗，系統錯誤!";
-                    } else {
-                        $arry_result["mesg"] = "取款失敗，系統錯誤!";
-                    }
-
+                    $arry_result["mesg"] = "取款失敗，系統錯誤!";
                     $arry_result["isTrue"] = false;
                     $arry_result["errorCod"] = 5;
                     return $arry_result;
                 }
 
-                if ($type==1) {
-                    $arry_result["mesg"] = "存款成功!";
-                } else {
-                    $arry_result["mesg"] = "取款成功!";
-                }
-
+                $arry_result["mesg"] = "取款成功!";
                 $arry_result["isTrue"] = true;
                 $arry_result["errorCod"] = 1;
                 return $arry_result;
-
             } else {
                 throw new Exception($error);
             }
 
         } catch (Exception $err) {
             $db->get_connection()->rollback();
-            if ($type==1) {
-                $arry_result["mesg"] = "存款失敗，系統錯誤!";
-            } else {
-                $arry_result["mesg"] = "取款失敗，系統錯誤!";
-            }
+            $arry_result["mesg"] = "取款失敗，系統錯誤!";
             $arry_result["isTrue"] = false;
             $arry_result["errorCod"] = 6;
             return $arry_result;
