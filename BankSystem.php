@@ -35,6 +35,7 @@ class BankSystem
             $arry_result["mesg"] = "存款失敗，系統錯誤!";
             $arry_result["isTrue"] = false;
             $arry_result["errorCod"] = 2;
+
             return $arry_result;
         }
 
@@ -51,12 +52,14 @@ class BankSystem
             $arry_result["mesg"] = "存款失敗，系統錯誤!";
             $arry_result["isTrue"] = false;
             $arry_result["errorCod"] = 3;
+
             return $arry_result;
         }
 
         $arry_result["mesg"] = "存款成功!";
         $arry_result["isTrue"] = true;
         $arry_result["errorCod"] = 1;
+
         return $arry_result;
     }
 
@@ -105,6 +108,7 @@ class BankSystem
                     $arry_result["mesg"] ="取款失敗，系統錯誤!";
                     $arry_result["isTrue"] = false;
                     $arry_result["errorCod"] = 4;
+
                     return $arry_result;
                 }
 
@@ -113,12 +117,14 @@ class BankSystem
                     $arry_result["mesg"] = "取款失敗，系統錯誤!";
                     $arry_result["isTrue"] = false;
                     $arry_result["errorCod"] = 5;
+
                     return $arry_result;
                 }
 
                 $arry_result["mesg"] = "取款成功!";
                 $arry_result["isTrue"] = true;
                 $arry_result["errorCod"] = 1;
+
                 return $arry_result;
             } else {
                 throw new Exception($error);
@@ -129,6 +135,7 @@ class BankSystem
             $arry_result["mesg"] = "取款失敗，系統錯誤!";
             $arry_result["isTrue"] = false;
             $arry_result["errorCod"] = 6;
+
             return $arry_result;
         }
 
@@ -152,6 +159,7 @@ class BankSystem
         // echo $sql_list;
         $row_list = $db->select($sql_list);
         // var_dump($row_list);
+
         return $row_list;
     }
 }

@@ -29,6 +29,7 @@ class Database
     public function select($sql)
     {
         $statement = $this->connection->query($sql, PDO::FETCH_ASSOC);
+
         return $statement->fetchAll();
     }
 
@@ -53,8 +54,10 @@ class Database
     {
         $rowEffect = $this->exec($sql);
         if ($rowEffect > 0) {
+
             return true;
         } else {
+
             return false;
         }
     }
@@ -105,6 +108,7 @@ class Database
         } else {
             $myip= $_SERVER['REMOTE_ADDR'];
         }
+
         return $myip;
     }
 
@@ -114,6 +118,7 @@ class Database
         if (!empty($str)) {
             $str = AddSlashes($str);
         }
+
         return $str; 
     }
 

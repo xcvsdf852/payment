@@ -15,6 +15,7 @@ class GetMoney
         // exit;
         $row = $db->select($sql);
         // var_dump($row);
+
         return $row[0];
     }
 }
