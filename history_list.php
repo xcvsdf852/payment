@@ -20,12 +20,12 @@ for ($i = 0; $i <= $length; $i++ ) {
 // exit;
 $html = ""; 
 for ($i = 0; $i <= $length; $i++ ) {
-     $html .= "<tr>
-                    <td id ='pa_id_".$arrayReturn[$i]['bank_log_id']."'>".$arrayReturn[$i]['bank_log_time']."</td>
-                    <td>".$arrayReturn[$i]['bank_log_do']."</td>
-                    <td>".$arrayReturn[$i]['bank_log_money']."</td>
-                    <td>".$arrayReturn[$i]['bank_log_balance']."</td>
-    　         </tr>";
+    $html .= "<tr>
+                <td id ='pa_id_".$arrayReturn[$i]['bank_log_id']."'>".$arrayReturn[$i]['bank_log_time']."</td>
+                <td>".$arrayReturn[$i]['bank_log_do']."</td>
+                <td>".$arrayReturn[$i]['bank_log_money']."</td>
+                <td>".$arrayReturn[$i]['bank_log_balance']."</td>
+               </tr>";
 }
 
 
@@ -47,12 +47,11 @@ for ($i = 0; $i <= $length; $i++ ) {
                 <th>存款/取款</th>
                 <th>存/取 金額</th>
                 <th>餘額</th>
-    　      </tr>
+            </tr>
         </thead>
         <tbody>
         <?php echo  $html;?>
-　      
-　      </tbody>
+        </tbody>
     </table>
     <button><a href = 'index.php'>回首頁</a></button>
 </body>
