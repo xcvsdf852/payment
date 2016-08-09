@@ -3,15 +3,16 @@ require_once("package/Database.php");
 
 class BankSystem
 {
+
     function deposit($money, $type, $id)
-    {   
+    {
         $db = new Database();
         $IP = $db->getIp();
         $money = $db->strSqlReplace($money);
         $type = $db->strSqlReplace($type);
         $id = $db->strSqlReplace($id);
-        
-        $sql = "SELECT `bank_user_money` "; 
+
+        $sql = "SELECT `bank_user_money` ";
         $sql .= "FROM `bank_user` ";
         $sql .= "WHERE `bank_user_id` = '".$id."' FOR UPDATE";
         // echo $sql;
@@ -21,7 +22,7 @@ class BankSystem
         // echo $row[0]['bank_user_money'];
         // exit;
         $balance = $row[0]['bank_user_money'];
-        
+
         $sql = "UPDATE `bank_user` ";
         $sql .= "SET `bank_user_money` = `bank_user_money` + $money ";
         $sql .= "WHERE `bank_user_id` = '$id' ";
@@ -66,7 +67,7 @@ class BankSystem
         $money = $db->strSqlReplace($money);
         $type = $db->strSqlReplace($type);
         $id = $db->strSqlReplace($id);
-        
+
         try
         {
             $db->get_connection()->beginTransaction();
@@ -98,8 +99,7 @@ class BankSystem
             //   echo $sql_Regist;
             //   exit;
                 $row__Regist = $db->update($sql_Regist);
-              
-              
+
                 $db->get_connection()->commit();
                 if (!$row) {
                     $arry_result["mesg"] ="取款失敗，系統錯誤!";
@@ -133,7 +133,7 @@ class BankSystem
         }
 
     }
-    
+
     function get_history_list($user_name){
         $db = new Database();
         $user_name = $db->strSqlReplace($user_name);

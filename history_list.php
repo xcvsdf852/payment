@@ -18,7 +18,7 @@ for ($i = 0; $i <= $length; $i++ ) {
 
 // var_dump($arrayReturn);
 // exit;
-$html = ""; 
+$html = "";
 for ($i = 0; $i <= $length; $i++ ) {
     $html .= "<tr>
                 <td id ='pa_id_".$arrayReturn[$i]['bank_log_id']."'>".$arrayReturn[$i]['bank_log_time']."</td>
@@ -28,9 +28,7 @@ for ($i = 0; $i <= $length; $i++ ) {
                </tr>";
 }
 
-
 ?>
-
 
 <!DOCTYPE HTML>
 <html>

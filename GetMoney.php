@@ -3,6 +3,7 @@ require_once("package/Database.php");
 
 class GetMoney
 {
+
     function selectMoney($user_name)
     {
         $db = new Database();

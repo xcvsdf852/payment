@@ -1,11 +1,14 @@
 <?php
+
 class Database
 {
     const DATABASE_HOST = 'localhost';
     const DATABASE_NAME = 'bank';
     const DATABASE_USERNAME = 'root';
     const DATABASE_PASSWORD = '';
+
     private $connection = null;
+
     public function __construct()
     {
         $dsn = sprintf('mysql:dbname=%s;host=%s', static::DATABASE_NAME, static::DATABASE_HOST);
@@ -16,17 +19,19 @@ class Database
             echo 'Connection failed: '.$e->getMessage();
         }
     }
-     /**
-     * Execute select query
-     *
-     * @param   string  SQL select query
-     * @return  array
-     */
+
+    /**
+    * Execute select query
+    *
+    * @param   string  SQL select query
+    * @return  array
+    */
     public function select($sql)
     {
         $statement = $this->connection->query($sql, PDO::FETCH_ASSOC);
         return $statement->fetchAll();
     }
+
     /**
     * Execute update query
     *
@@ -37,6 +42,7 @@ class Database
     {
         return $this->exec($sql);
     }
+
     /**
     * Execute insert query
     *
@@ -52,6 +58,7 @@ class Database
             return false;
         }
     }
+
     /**
     * Execute delete query
     *
@@ -62,6 +69,7 @@ class Database
     {
         return $this->exec($sql);
     }
+
     /**
     * Last insert id
     *
@@ -71,6 +79,7 @@ class Database
     {
         return (int)$this->connection->lastInsertId();
     }
+
     /**
     * Execute any SQL query
     *
@@ -101,9 +110,9 @@ class Database
 
     function strSqlReplace($str)
     {
-        $str = trim($str);	
+        $str = trim($str);
         if (!empty($str)) {
-            $str = AddSlashes($str);	
+            $str = AddSlashes($str);
         }
         return $str; 
     }
