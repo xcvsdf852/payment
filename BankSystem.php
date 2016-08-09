@@ -7,7 +7,7 @@ class BankSystem
     function deposit($money, $type, $id)
     {
         $db = new Database();
-        $IP = $db->getIp();
+        $ip = $db->getIp();
         $money = $db->strSqlReplace($money);
         $type = $db->strSqlReplace($type);
         $id = $db->strSqlReplace($id);
@@ -32,48 +32,48 @@ class BankSystem
         // var_dump($row);
         // exit;
         if (!$row) {
-            $arry_result["mesg"] = "存款失敗，系統錯誤!";
-            $arry_result["isTrue"] = false;
-            $arry_result["errorCod"] = 2;
+            $arryResult["mesg"] = "存款失敗，系統錯誤!";
+            $arryResult["isTrue"] = false;
+            $arryResult["errorCod"] = 2;
 
-            return $arry_result;
+            return $arryResult;
         }
 
         $balance = $balance + $money;
-        $sql_Regist .= "INSERT INTO `bank_log`";
-        $sql_Regist .= "(`bank_log_do`, `bank_log_money`, `bank_log_balance`, ";
-        $sql_Regist .= "`bank_log_suer`, `bank_log_time`, `bank_log_ip`) ";
-        $sql_Regist .= "VALUES ('$type','$money','$balance','$id',NOW(),'$IP')";
+        $sqlRegist .= "INSERT INTO `bank_log`";
+        $sqlRegist .= "(`bank_log_do`, `bank_log_money`, `bank_log_balance`, ";
+        $sqlRegist .= "`bank_log_suer`, `bank_log_time`, `bank_log_ip`) ";
+        $sqlRegist .= "VALUES ('$type','$money','$balance','$id',NOW(),'$ip')";
         //echo $sql_Regist;
         //exit;
-        $row__Regist = $db->update($sql_Regist);
+        $rowRegist = $db->insert($sqlRegist);
         // var_dump($row__Regist);
-        if (!$row__Regist) {
-            $arry_result["mesg"] = "存款失敗，系統錯誤!";
-            $arry_result["isTrue"] = false;
-            $arry_result["errorCod"] = 3;
+        if (!$rowRegist) {
+            $arryResult["mesg"] = "存款失敗，系統錯誤!";
+            $arryResult["isTrue"] = false;
+            $arryResult["errorCod"] = 3;
 
-            return $arry_result;
+            return $arryResult;
         }
 
-        $arry_result["mesg"] = "存款成功!";
-        $arry_result["isTrue"] = true;
-        $arry_result["errorCod"] = 1;
+        $arryResult["mesg"] = "存款成功!";
+        $arryResult["isTrue"] = true;
+        $arryResult["errorCod"] = 1;
 
-        return $arry_result;
+        return $arryResult;
     }
 
     function withdrawals($money, $type, $id)
     {
         $db = new Database();
-        $IP = $db->getIp();
+        $ip = $db->getIp();
         $money = $db->strSqlReplace($money);
         $type = $db->strSqlReplace($type);
         $id = $db->strSqlReplace($id);
 
         try
         {
-            $db->get_connection()->beginTransaction();
+            $db->getConnection()->beginTransaction();
             $sql = "SELECT `bank_user_money` ";
             $sql .= "FROM `bank_user` ";
             $sql .= "WHERE `bank_user_id` = '".$id."' FOR UPDATE";
@@ -95,71 +95,71 @@ class BankSystem
                 // var_dump($row);
                 // exit;
                 $balance = $balance - $money;
-                $sql_Regist = "INSERT INTO `bank_log` ";
-                $sql_Regist .= "(`bank_log_do`, `bank_log_money`, "; 
-                $sql_Regist .= "`bank_log_balance`, `bank_log_suer`, `bank_log_time`, `bank_log_ip`)";
-                $sql_Regist .= "VALUES ('$type','$money','$balance','$id',NOW(),'$IP')";
-            //   echo $sql_Regist;
+                $sqlRegist = "INSERT INTO `bank_log` ";
+                $sqlRegist .= "(`bank_log_do`, `bank_log_money`, "; 
+                $sqlRegist .= "`bank_log_balance`, `bank_log_suer`, `bank_log_time`, `bank_log_ip`)";
+                $sqlRegist .= "VALUES ('$type','$money','$balance','$id',NOW(),'$ip')";
+            //   echo $sqlRegist;
             //   exit;
-                $row__Regist = $db->update($sql_Regist);
+                $rowRegist = $db->update($sqlRegist);
 
-                $db->get_connection()->commit();
+                $db->getConnection()->commit();
                 if (!$row) {
-                    $arry_result["mesg"] ="取款失敗，系統錯誤!";
-                    $arry_result["isTrue"] = false;
-                    $arry_result["errorCod"] = 4;
+                    $arryResult["mesg"] ="取款失敗，系統錯誤!";
+                    $arryResult["isTrue"] = false;
+                    $arryResult["errorCod"] = 4;
 
-                    return $arry_result;
+                    return $arryResult;
                 }
 
-                // var_dump($row__Regist);
-                if (!$row__Regist) {
-                    $arry_result["mesg"] = "取款失敗，系統錯誤!";
-                    $arry_result["isTrue"] = false;
-                    $arry_result["errorCod"] = 5;
+                // var_dump($rowRegist);
+                if (!$rowRegist) {
+                    $arryResult["mesg"] = "取款失敗，系統錯誤!";
+                    $arryResult["isTrue"] = false;
+                    $arryResult["errorCod"] = 5;
 
-                    return $arry_result;
+                    return $arryResult;
                 }
 
-                $arry_result["mesg"] = "取款成功!";
-                $arry_result["isTrue"] = true;
-                $arry_result["errorCod"] = 1;
+                $arryResult["mesg"] = "取款成功!";
+                $arryResult["isTrue"] = true;
+                $arryResult["errorCod"] = 1;
 
-                return $arry_result;
+                return $arryResult;
             } else {
                 throw new Exception($error);
             }
 
         } catch (Exception $err) {
-            $db->get_connection()->rollback();
-            $arry_result["mesg"] = "取款失敗，系統錯誤!";
-            $arry_result["isTrue"] = false;
-            $arry_result["errorCod"] = 6;
+            $db->getConnection()->rollback();
+            $arryResult["mesg"] = "取款失敗，系統錯誤!";
+            $arryResult["isTrue"] = false;
+            $arryResult["errorCod"] = 6;
 
-            return $arry_result;
+            return $arryResult;
         }
 
     }
 
-    function get_history_list($user_name){
+    function getHistoryList($userName){
         $db = new Database();
-        $user_name = $db->strSqlReplace($user_name);
+        $userName = $db->strSqlReplace($userName);
         $sql = "SELECT `bank_user_id` ";
         $sql .= "FROM `bank_user` ";
-        $sql .= "WHERE `bank_user_name` = '".$user_name."'";
+        $sql .= "WHERE `bank_user_name` = '".$userName."'";
         // echo $sql;
         // exit;
         $row = $db->select($sql);
         // var_dump($row);
         // exit;
-        $sql_list ="SELECT `bank_log_id`, `bank_log_do`, `bank_log_money`, ";
-        $sql_list .= "`bank_log_balance`, `bank_log_time` ";
-        $sql_list .= "FROM `bank_log` ";
-        $sql_list .= "WHERE `bank_log_suer` = '".$row[0]['bank_user_id']."'";
+        $sqlList ="SELECT `bank_log_id`, `bank_log_do`, `bank_log_money`, ";
+        $sqlList .= "`bank_log_balance`, `bank_log_time` ";
+        $sqlList .= "FROM `bank_log` ";
+        $sqlList .= "WHERE `bank_log_suer` = '".$row[0]['bank_user_id']."'";
         // echo $sql_list;
-        $row_list = $db->select($sql_list);
-        // var_dump($row_list);
+        $rowList = $db->select($sqlList);
+        // var_dump($rowList);
 
-        return $row_list;
+        return $rowList;
     }
 }

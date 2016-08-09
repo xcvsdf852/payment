@@ -4,13 +4,13 @@ require_once("package/Database.php");
 class GetMoney
 {
 
-    function selectMoney($user_name)
+    function selectMoney($userName)
     {
         $db = new Database();
-        $user_name = $db->strSqlReplace($user_name);
+        $userName = $db->strSqlReplace($userName);
         $sql = "SELECT `bank_user_id`,`bank_user_money` ";
         $sql .= "FROM `bank_user` ";
-        $sql .= "WHERE `bank_user_name` = '".$user_name."'";
+        $sql .= "WHERE `bank_user_name` = '".$userName."'";
         // echo $sql;
         // exit;
         $row = $db->select($sql);

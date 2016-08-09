@@ -1,8 +1,8 @@
 <?php
 require_once("BankSystem.php");
 
-$BankSystem = new BankSystem;
-$arrayReturn =  $BankSystem->get_history_list($_POST['user_name']);
+$bankSystem = new BankSystem;
+$arrayReturn =  $bankSystem->getHistoryList($_POST['user_name']);
 // var_dump($arrayReturn);
 $length = count($arrayReturn) -1 ;
 

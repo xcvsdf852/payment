@@ -94,7 +94,7 @@ class Database
         return $this->connection->exec($sql);
     }
 
-    public function get_connection()
+    public function getConnection()
     {
         return $this->connection;
     }
@@ -116,7 +116,7 @@ class Database
     {
         $str = trim($str);
         if (!empty($str)) {
-            $str = AddSlashes($str);
+            $str = addslashes($str);
         }
 
         return $str; 

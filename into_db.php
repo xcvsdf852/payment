@@ -2,12 +2,12 @@
 require_once("BankSystem.php");
 # 1 是存款
 # 2 是取款
-$BankSystem = new BankSystem;
+$bankSystem = new BankSystem;
 
 if ($_POST['type']==1) {
-    $arrayReturn = $BankSystem->deposit($_POST['money'], $_POST['type'], $_POST['id']); #存款
+    $arrayReturn = $bankSystem->deposit($_POST['money'], $_POST['type'], $_POST['id']); #存款
 } else {
-    $arrayReturn = $BankSystem->withdrawals($_POST['money'], $_POST['type'], $_POST['id']); #取款
+    $arrayReturn = $bankSystem->withdrawals($_POST['money'], $_POST['type'], $_POST['id']); #取款
 }
 
 // var_dump($arrayReturn);
