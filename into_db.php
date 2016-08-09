@@ -5,12 +5,12 @@ require_once("BankSystem.php");
 $BankSystem = new BankSystem;
 
 if ($_POST['type']==1) {
-    $arrayRtturn = $BankSystem->deposit($_POST['money'], $_POST['type'], $_POST['id']); #存款
+    $arrayReturn = $BankSystem->deposit($_POST['money'], $_POST['type'], $_POST['id']); #存款
 } else {
-    $arrayRtturn = $BankSystem->withdrawals($_POST['money'], $_POST['type'], $_POST['id']); #取款
+    $arrayReturn = $BankSystem->withdrawals($_POST['money'], $_POST['type'], $_POST['id']); #取款
 }
 
-// var_dump($arrayRtturn);
+// var_dump($arrayReturn);
 ?>
 <html>
 <head>
@@ -20,7 +20,7 @@ if ($_POST['type']==1) {
 </head>
 <body>
     <form action="into_db.php" method="post">
-        操作結果 : <?php echo $arrayRtturn['mesg']?>
+        操作結果 : <?php echo $arrayReturn['mesg']?>
         <br>
         <button><a href = 'index.php'>回首頁</a></button>
     </form>

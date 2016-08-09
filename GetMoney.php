@@ -12,7 +12,6 @@ class GetMoney
                 WHERE `bank_user_name` = '".$user_name."'";
         // echo $sql;
         // exit;
-        
         $row = $db->select($sql);
         // var_dump($row);
         return $row[0];
