@@ -31,7 +31,7 @@ class BankSystem
             if (!$row) {
                 throw new Exception($error);
             }
-            sleep(5);
+
             $balance = $balance + $money;
             $sqlRegist .= "INSERT INTO `bank_log`";
             $sqlRegist .= "(`bank_log_do`, `bank_log_money`, `bank_log_balance`, ";
