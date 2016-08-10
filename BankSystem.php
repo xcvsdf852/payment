@@ -16,7 +16,7 @@ class BankSystem
 
             $sql = "SELECT `bank_user_money` ";
             $sql .= "FROM `bank_user` ";
-            $sql .= "WHERE `bank_user_id` = '".$id."' LOCK IN SHARE MODE";
+            $sql .= "WHERE `bank_user_id` = '".$id."'";
 
             $row = $db->select($sql);
 

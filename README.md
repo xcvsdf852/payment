@@ -21,9 +21,17 @@
 ###當Sleep位置在UPDATE之前，相差一秒鐘時，SELECT與UPDATE的狀態
 ![Alt text](https://github.com/xcvsdf852/payment/blob/master/doc/update-diff1s.PNG "相差一秒鐘時")
 
-+根據兩個結果，LOCK IN SHARE MODE後是可以被查詢的，但當要一起UPDATE時第一個未解鎖，
++ 根據兩個結果，LOCK IN SHARE MODE後是可以被查詢的，但當要一起UPDATE時第一個未解鎖，
  第二個要執行就會失敗。
 
 ###增加IE測試
 ![Alt text](https://github.com/xcvsdf852/payment/blob/master/doc/IE_test.PNG "相差一秒鐘時")
 + 結果相同
+
+#移除 LOCK IN SHARE MODE SLEEP 位置 測試心得
+
+![Alt text](https://github.com/xcvsdf852/payment/blob/master/doc/delete_LOCK_IN_SHARE_MODE.PNG "移除 LOCK IN SHARE MODE SLEEP")
+
++ 當Sleep位置在UPDATE與UPDATE之前，都可成功執行，但明細與實際金額不相符!
+ 1. 沒有鎖SELECT導致，A與B都讀出金額0，然後新增明細時，就都只會加100塊
+ 2. 在實際金額方面都會讀取目前欄位實際金額然後相加，因此實際金額相符200塊
