@@ -13,6 +13,7 @@ class BankSystem
 
         try {
             $db->getConnection()->beginTransaction();
+
             $sql = "SELECT `bank_user_money` ";
             $sql .= "FROM `bank_user` ";
             $sql .= "WHERE `bank_user_id` = '".$id."' LOCK IN SHARE MODE";

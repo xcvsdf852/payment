@@ -1,39 +1,27 @@
-目標
-===
-撰寫一個簡易銀行系統，不同使用者有自己的餘額和明細，可出款、入款、查看餘額和帳目明細。另外須達成以下四項要求
+#LOCK IN SHARE MODE SLEEP 位置 測試心得
+
+![Alt text](/payment/doc/Sleep_test.PNG "測試")
 
 
-要求
----
-1. 程式撰寫命名與風格(Coding style)務必一致。可參考PHP-FIG網站
-2. 確保同一使用者可”同時”進行出入款且餘額計算無誤。可用兩台電腦同時按送出測試問題。可搜尋Race condition進一步了解問題
-3. 善加利用Git版本控制，務必讓每個commit清楚明瞭，讓評分者可以快速瞭解所有修改歷程與內容
+Sleep設置5秒
 
-  a. commit 說明務必簡單明瞭，可讓人一眼看出內容修改了什麼
-  
-  b. 一個 commit只做一件事，或只完成一個小段落，避免大量不同方面修改在同一個 commit 裡
-  
-4. 請注意Injection等資訊安全問題。帳號登入問題可以忽略
 
-其他非必需加分條件
----
-  - 測試碼 (請參考[網址](https://phpunit.de))
+當Sleep位置在SELECT之前，一起動作時A與B相差一秒，等待一秒時，A與B相差兩秒，
+因此B都會等待A的一秒執行時間。
 
-注意事項
----
-  1. 前端介面簡易並可觸發功能即可，重點在後端server程式寫法
-  2. 請針對要求製作出基本功能即可，多寫的功能不會加分也不會扣分。例如：使用者登入、轉帳、利息計算、多國幣別等... 這些就算多寫也不會加分
+當Sleep位置在UPDATE之前，不管是一起或是相差一秒鐘，B的測試結果都失敗。
+推測兩種可能
+1.可能當第一個LOCK IN SHARE MODE SLEEP後，第二個無法讀取進行，向FOR UPDATE功能一樣鎖住UPDATE
+2.可能兩個都能讀取，但當要UPDATE時第一個還未結束並解鎖，第二個也要UPDATE所以失敗
 
-測試方式
----
-- 採用 apache-benchmark ([ab](https://httpd.apache.org/docs/2.4/programs/ab.html)) 工具
+當Sleep位置在INSERT之前，一起動作時與等待一秒時，都是相差五秒，表示A與B都已完成存款，
+等待新增紀錄。
 
-1. 請先安裝
+#當Sleep位置在UPDATE之前，一起動作時，SELECT與UPDATE的狀態
+![Alt text](/payment/doc/update.PNG "測試")
 
-  > sudo apt-get update
+#當Sleep位置在UPDATE之前，相差一秒鐘時，SELECT與UPDATE的狀態
+![Alt text](/payment/doc/update-diff1s.PNG "測試")
 
-  > sudo apt-get install apache2-utils
-
-2. 簡易使用方式
-
-  > ab -c 3 -n 1000 http://網址/
+根據兩個結果，LOCK IN SHARE MODE後是可以被查詢的，但當要一起UPDATE時第一個未解鎖，
+第二個要執行就會失敗。
