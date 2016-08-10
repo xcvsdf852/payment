@@ -1,6 +1,6 @@
 #LOCK IN SHARE MODE SLEEP 位置 測試心得
 
-![Alt text](/payment/doc/Sleep_test.PNG "測試")
+![Alt text](https://github.com/xcvsdf852/payment/blob/master/doc/Sleep_test.PNG "測試")
 
 
 Sleep設置5秒
@@ -17,11 +17,11 @@ Sleep設置5秒
 當Sleep位置在INSERT之前，一起動作時與等待一秒時，都是相差五秒，表示A與B都已完成存款，
 等待新增紀錄。
 
-#當Sleep位置在UPDATE之前，一起動作時，SELECT與UPDATE的狀態
-![Alt text](/payment/doc/update.PNG "測試")
+###當Sleep位置在UPDATE之前，一起動作時，SELECT與UPDATE的狀態
+![Alt text](https://github.com/xcvsdf852/payment/blob/master/doc/update.PNG "一起動作時")
 
-#當Sleep位置在UPDATE之前，相差一秒鐘時，SELECT與UPDATE的狀態
-![Alt text](/payment/doc/update-diff1s.PNG "測試")
+###當Sleep位置在UPDATE之前，相差一秒鐘時，SELECT與UPDATE的狀態
+![Alt text](https://github.com/xcvsdf852/payment/blob/master/doc/update-diff1s.PNG "相差一秒鐘時")
 
 根據兩個結果，LOCK IN SHARE MODE後是可以被查詢的，但當要一起UPDATE時第一個未解鎖，
 第二個要執行就會失敗。
