@@ -32,6 +32,6 @@
 
 ![Alt text](https://github.com/xcvsdf852/payment/blob/master/doc/delete_LOCK_IN_SHARE_MODE.PNG "移除 LOCK IN SHARE MODE SLEEP")
 
-+ 當Sleep位置在UPDATE與UPDATE之前，都可成功執行，但明細與實際金額不相符!
++ 當Sleep位置在UPDATE與INSERT之前，都可成功執行，但明細與實際金額不相符!
  1. 沒有鎖SELECT導致，A與B都讀出金額0，然後新增明細時，就都只會加100塊
  2. 在實際金額方面都會讀取目前欄位實際金額然後相加，因此實際金額相符200塊
