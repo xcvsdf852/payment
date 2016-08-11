@@ -14,13 +14,21 @@ class BankSystem
         try {
             $db->getConnection()->beginTransaction();
 
-            $sql = "SELECT `bank_user_money` ";
-            $sql .= "FROM `bank_user` ";
-            $sql .= "WHERE `bank_user_id` = '".$id."'";
+            $sql = "UPDATE `bank_user` SET `bank_user_flag` = '0' ";
+            $sql .="WHERE `bank_user_flag` = '1' AND `bank_user_id` = '$id'";
 
-            $row = $db->select($sql);
+            $row = $db->update($sql);
 
-            $balance = $row[0]['bank_user_money'];
+            if ($row == 0) {
+                throw new Exception("目前有人使用，請稍後嘗試!");
+            }
+            $sqlSelect = "SELECT `bank_user_money` ";
+            $sqlSelect .= "FROM `bank_user` ";
+            $sqlSelect .= "WHERE `bank_user_id` = '".$id."' ";
+
+            $rowSelect = $db->select($sqlSelect);
+
+            $balance = $rowSelect[0]['bank_user_money'];
 
             $sql = "UPDATE `bank_user` ";
             $sql .= "SET `bank_user_money` = `bank_user_money` + $money ";
@@ -29,7 +37,7 @@ class BankSystem
             $row = $db->update($sql);
 
             if (!$row) {
-                throw new Exception($error);
+                throw new Exception("取款失敗，系統錯誤!");
             }
 
             $balance = $balance + $money;
@@ -41,14 +49,24 @@ class BankSystem
             $rowRegist = $db->insert($sqlRegist);
 
             if (!$rowRegist) {
-                throw new Exception($error);
+                throw new Exception("取款失敗，系統錯誤!");
+            }
+
+            $sqlFlag = "UPDATE `bank_user` ";
+            $sqlFlag .= "SET `bank_user_flag` = 1 ";
+            $sqlFlag .= "WHERE `bank_user_id` = '$id' ";
+
+            $rowFlag = $db->update($sqlFlag);
+
+            if (!$rowFlag) {
+                throw new Exception("取款失敗，系統錯誤!");
             }
 
             $db->getConnection()->commit();
 
         } catch (Exception $err) {
             $db->getConnection()->rollback();
-            $arryResult["mesg"] = "取款失敗，系統錯誤!";
+            $arryResult["mesg"] = $err->getMessage();
             $arryResult["isTrue"] = false;
             $arryResult["errorCod"] = 6;
 
@@ -71,19 +89,34 @@ class BankSystem
 
         try {
             $db->getConnection()->beginTransaction();
-            $sql = "SELECT `bank_user_money` ";
-            $sql .= "FROM `bank_user` ";
-            $sql .= "WHERE `bank_user_id` = '".$id."'  LOCK IN SHARE MODE ";
 
-            $row = $db->select($sql);
+            $sql = "UPDATE `bank_user` SET `bank_user_flag` = '0' ";
+            $sql .="WHERE `bank_user_flag` = '1' AND `bank_user_id` = '$id'";
 
-            $balance = $row[0]['bank_user_money'];
+            $row = $db->update($sql);
+
+            if ($row == 0) {
+                throw new Exception("目前有人使用，請稍後嘗試!");
+            }
+
+            $sqlSelect = "SELECT `bank_user_money` ";
+            $sqlSelect .= "FROM `bank_user` ";
+            $sqlSelect .= "WHERE `bank_user_id` = '".$id."' ";
+
+            $rowSelect = $db->select($sqlSelect);
+
+            $balance = $rowSelect[0]['bank_user_money'];
             if ($balance >= $money) {
+
                 $sql = "UPDATE `bank_user` ";
                 $sql .= "SET `bank_user_money` = `bank_user_money` - $money ";
                 $sql .= "WHERE `bank_user_id` = '$id'";
 
                 $row = $db->update($sql);
+
+                if (!$row) {
+                    throw new Exception("取款失敗，系統錯誤!");
+                }
 
                 $balance = $balance - $money;
                 $sqlRegist = "INSERT INTO `bank_log` ";
@@ -93,22 +126,21 @@ class BankSystem
 
                 $rowRegist = $db->update($sqlRegist);
 
-                $db->getConnection()->commit();
-                if (!$row) {
-                    $arryResult["mesg"] ="取款失敗，系統錯誤!";
-                    $arryResult["isTrue"] = false;
-                    $arryResult["errorCod"] = 4;
-
-                    return $arryResult;
-                }
-
                 if (!$rowRegist) {
-                    $arryResult["mesg"] = "取款失敗，系統錯誤!";
-                    $arryResult["isTrue"] = false;
-                    $arryResult["errorCod"] = 5;
-
-                    return $arryResult;
+                    throw new Exception("取款失敗，系統錯誤!");
                 }
+
+                $sqlFlag = "UPDATE `bank_user` ";
+                $sqlFlag .= "SET `bank_user_flag` = 1 ";
+                $sqlFlag .= "WHERE `bank_user_id` = '$id' ";
+
+                $rowFlag = $db->update($sqlFlag);
+
+                if (!$rowFlag) {
+                    throw new Exception("取款失敗，系統錯誤!");
+                }
+
+                $db->getConnection()->commit();
 
                 $arryResult["mesg"] = "取款成功!";
                 $arryResult["isTrue"] = true;
@@ -116,12 +148,12 @@ class BankSystem
 
                 return $arryResult;
             } else {
-                throw new Exception($error);
+                throw new Exception("取款失敗，餘額不足!");
             }
 
         } catch (Exception $err) {
             $db->getConnection()->rollback();
-            $arryResult["mesg"] = "取款失敗，系統錯誤!";
+            $arryResult["mesg"] = $err->getMessage();
             $arryResult["isTrue"] = false;
             $arryResult["errorCod"] = 6;
 
