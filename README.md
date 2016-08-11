@@ -35,3 +35,18 @@
 + 當Sleep位置在UPDATE與INSERT之前，都可成功執行，但明細與實際金額不相符!
  1. 沒有鎖SELECT導致，A與B都讀出金額0，然後新增明細時，就都只會加100塊
  2. 在實際金額方面都會讀取目前欄位實際金額然後相加，因此實際金額相符200塊
+
+
+#使用flag 測試心得
+![Alt text](https://github.com/xcvsdf852/payment/blob/master/doc/flag_test_sleep.PNG "sleep測試結果")
++ 執行都可成功執行，且明細與實際金額相符!
+
+###嘗試網路問題測試，餘額1000，同時取500，存800，金額與明細相符
+![Alt text](https://github.com/xcvsdf852/payment/blob/master/doc/flag_deposit_withdrawals.PNG "sleep測試結果")
+
+###同時扣款，超出金額，也成功阻擋
+![Alt text](https://github.com/xcvsdf852/payment/blob/master/doc/flag.PNG "超出金額測試")
+
++ 發現，用這個方式防錯方面可以達到LOCK IN SHARE MODE SLEEP相同效果。
+ 1. 在sleep在UPDATE之前的失敗也不會發生
+ 2. 成功的同時，明細與實際金額也能對的上
