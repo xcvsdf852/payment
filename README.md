@@ -41,7 +41,7 @@
 ![Alt text](https://github.com/xcvsdf852/payment/blob/master/doc/flag_test_sleep.PNG "sleep測試結果")
 + 執行都可成功執行，且明細與實際金額相符!
 
-###嘗試網路問題測試，餘額1000，同時取500，存800，金額與明細相符
+###嘗試[網址範例](http://sls.weco.net/node/21326)問題測試，餘額1000，同時取500，存800，金額與明細相符
 ![Alt text](https://github.com/xcvsdf852/payment/blob/master/doc/flag_deposit_withdrawals.PNG "sleep測試結果")
 
 ###同時扣款，超出金額，也成功阻擋
@@ -50,3 +50,14 @@
 + 發現，用這個方式防錯方面可以達到LOCK IN SHARE MODE SLEEP相同效果。
  1. 在sleep在UPDATE之前的失敗也不會發生
  2. 成功的同時，明細與實際金額也能對的上
+
+###壓力測試
+![Alt text](https://github.com/xcvsdf852/payment/blob/master/doc/apache-benchmark.jpg "同時測試存取款")
+
++ 同時對同一個帳戶執行存款100元與取款5元
+ 1. 存款成功執行 所以應該成功存款10000元
+ 2. 取款失敗88筆 所以應該少取440元
+
+![Alt text](https://github.com/xcvsdf852/payment/blob/master/doc/result.png "明細與實際金額相符")
+
++ 同時核對明細與資料庫實際金額，與預測金額相符
